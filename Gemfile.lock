@@ -1,0 +1,19 @@
+PATH
+  remote: .
+  specs:
+    smackdown (0.0.1)
+      rugged (= 0.19.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rugged (0.19.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  smackdown!
+
+BUNDLED WITH
+   1.10.6
