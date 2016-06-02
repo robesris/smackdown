@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gemspec
+gem 'rugged', '0.19.0'

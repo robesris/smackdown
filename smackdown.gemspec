@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
-# $LOAD_PATH.unshift "lib"
-$:.push File.expand_path("../lib", __FILE__)
-
-require "smackdown"
+$LOAD_PATH.unshift('lib')
+require 'smackdown/version'
 
 Gem::Specification.new do |s|
   s.name          = "smackdown"
