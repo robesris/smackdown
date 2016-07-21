@@ -17,9 +17,15 @@ module Smackdown
 
     def initialize(repo_path, opts = {})
       raise "Repo path does not exist: #{repo_path}" unless Dir.exists?(repo_path)
-      @repo                 = Rugged::Repository.new(repo_path)
 
       @coverage_report_path = opts[:coverage_report_path] || File.join(repo_path, 'coverage', 'coverage.json')
+      @coverage_json        = opts[:coverage_json] || nil
+
+      if @coverage_report_path && @coverage_json
+        raise "Please pass only :coverage_report_path or :coverage_json, not both."
+      end
+
+      @repo                 = Rugged::Repository.new(repo_path)
       @report_path_prefix   = opts[:report_path_prefix] || repo_path
       @head                 = opts[:head] || 'HEAD'
       @merge_base           = opts[:merge_base] || 'master'
@@ -29,7 +35,7 @@ module Smackdown
     end
 
     def run
-      parse_coverage_report
+      process_coverage
 
       @diff = @repo.diff(@repo.merge_base(@merge_base, @head), @head, context_lines: @context_lines)
 
@@ -58,9 +64,18 @@ module Smackdown
         raise "Coverage report path does not exist: #{@coverage_report_path}" unless File.exists?(@coverage_report_path)
         file_contents = File.read(@coverage_report_path)
       end
-      coverage_json = JSON.parse(file_contents)
+
+      @parsed_coverage_json = JSON.parse(file_contents)
+    end
+
+    def process_coverage
+      if @coverage_json
+        @parsed_coverage_json = JSON.parse(@coverage_json)
+      else
+        parse_coverage_report
+      end
       @coverage_json_hash = Hash.new
-      coverage_json["files"].each do |file_diff|
+      @parsed_coverage_json["files"].each do |file_diff|
         @coverage_json_hash[file_diff["filename"]] = file_diff["coverage"]
       end
     end
