@@ -1,3 +1,4 @@
+require 'json'
 require 'rugged'
 
 require 'smackdown/uncovered_line'
