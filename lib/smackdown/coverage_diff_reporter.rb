@@ -16,7 +16,7 @@ module Smackdown
     attr_reader :file_coverage_diffs
 
     def initialize(repo_path, opts = {})
-      raise "Repo path does not exist: #{repo_path}" unless Dir.exists?(repo_path)
+      raise "Repo path does not exist: #{repo_path}" unless Dir.exist?(repo_path)
 
       @coverage_report_path = opts[:coverage_report_path] || File.join(repo_path, 'coverage', 'coverage.json')
       @coverage_json        = opts[:coverage_json] || nil
@@ -61,7 +61,7 @@ module Smackdown
       if ["http", "https"].include?(uri.scheme)
         file_contents = Net::HTTP.get(uri)
       else
-        raise "Coverage report path does not exist: #{@coverage_report_path}" unless File.exists?(@coverage_report_path)
+        raise "Coverage report path does not exist: #{@coverage_report_path}" unless File.exist?(@coverage_report_path)
         file_contents = File.read(@coverage_report_path)
       end
 
