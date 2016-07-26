@@ -98,7 +98,7 @@ coverage report in the submodule root as `coverage/coverage.json`.
 
 What we want to see, in order to verify that `smackdown` is functioning correctly, is as follows:
 - The new untested method (`uncovered_method`) is identified by `smackdown` as newly-introduced but uncovered code.
-- The untested method that already existed on master (`existing_uncovered_method`) is ignored, as it was not introduced by
+- The untested method that already existed on `master` (`existing_uncovered_method`) is ignored, as it was not introduced by
   the code changes made in `my_branch`.
 
 The tests in the main `smackdown` repo are geared towards testing for these characteristics.
