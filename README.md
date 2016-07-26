@@ -16,6 +16,7 @@ to check that all our new and changed code is covered by tests, do the following
 
 1) Produce a json-format simplecov report for your repo's `my_feature` branch (see the simplecov docs for how to do this: https://github.com/colszowka/simplecov).  This file will normally appear as `coverage/coverage.json` relative to your repo's
 root.
+
 2) Use smackdown to get a report on the code that the `my_feature` branch has added and changed since it branched off `master`:
 
 ```
