@@ -102,3 +102,10 @@ What we want to see, in order to verify that `smackdown` is functioning correctl
   the code changes made in `my_branch`.
 
 The tests in the main `smackdown` repo are geared towards testing for these characteristics.
+
+
+Credit
+======
+
+Thanks to @ivantsepp (and his `lintrunner` gem: https://github.com/ivantsepp/lintrunner) for help and inspiration
+getting started with this project!
