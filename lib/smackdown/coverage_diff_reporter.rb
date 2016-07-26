@@ -18,11 +18,14 @@ module Smackdown
     def initialize(repo_path, opts = {})
       raise "Repo path does not exist: #{repo_path}" unless Dir.exist?(repo_path)
 
-      @coverage_report_path = opts[:coverage_report_path] || File.join(repo_path, 'coverage', 'coverage.json')
+      if opts[:coverage_report_path] && opts[:coverage_json]
+        raise "Please pass only :coverage_report_path or :coverage_json, not both."
+      end
+
       @coverage_json        = opts[:coverage_json] || nil
 
-      if @coverage_report_path && @coverage_json
-        raise "Please pass only :coverage_report_path or :coverage_json, not both."
+      unless @coverage_json
+        @coverage_report_path = opts[:coverage_report_path] || File.join(repo_path, 'coverage', 'coverage.json')
       end
 
       @repo                 = Rugged::Repository.new(repo_path)
