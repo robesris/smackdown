@@ -70,7 +70,7 @@ Clone the repo, then:
 cd smackdown
 git submodule init
 git submodule update
-ruby ./test/script/init.rb  # This will run the tests in the smackdown_test_repo subproject and produce a test coverage report
+ruby test/script/init.rb  # This will run the tests in the smackdown_test_repo subproject and produce a test coverage report
 bundle exec rake test
 ```
 
@@ -93,7 +93,7 @@ one of the methods in the `master` branch (`covered_method`) but not the other (
 Now, `my_branch` represents code changes from master, and adds a new method (really just uncomments the `uncovered_method`
 method).  However, it does not add any tests to cover this new method.
 
-Running `ruby ./test/script/init.rb` as described above runs the test suite on the `my_branch` branch, and generates a
+Running `ruby test/script/init.rb` as described above runs the test suite on the `my_branch` branch, and generates a
 coverage report in the submodule root as `coverage/coverage.json`.
 
 What we want to see, in order to verify that `smackdown` is functioning correctly, is as follows:
