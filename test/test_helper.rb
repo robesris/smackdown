@@ -1,3 +1,4 @@
+require 'mocha/mini_test'
 require 'simplecov'
 require 'simplecov-json'
 
