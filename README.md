@@ -73,3 +73,32 @@ git submodule update
 ruby ./test/script/init.rb  # This will run the tests in the smackdown_test_repo subproject and produce a test coverage report
 bundle exec rake test
 ```
+
+Open `coverage/index.html` and verify that you have 100% test coverage!
+
+
+How the Tests Work
+==================
+
+The test setup here is a little unusual due to the fact that this gem's functionality fundamentally involves comparing 
+different revisions in a git repo.
+
+We test this by making use of an ACTUAL git repo which exists solely for the purpose of testing the smackdown gem, and
+which is included here as a submodule (hence the submodule init and update steps): https://github.com/robesris/smackdown_test_repo
+
+The `smackdown_test_repo` contains two branches as of this writing: `master` and `my_branch`.  The `master` branch includes
+some sample "app code" that simply defines a class with a couple methods, as well as a tiny test suite.  The test suite tests
+one of the methods in the `master` branch (`covered_method`) but not the other (`existing_uncovered_method`).
+
+Now, `my_branch` represents code changes from master, and adds a new method (really just uncomments the `uncovered_method`
+method).  However, it does not add any tests to cover this new method.
+
+Running `ruby ./test/script/init.rb` as described above runs the test suite on the `my_branch` branch, and generates a
+coverage report in the submodule root as `coverage/coverage.json`.
+
+What we want to see, in order to verify that `smackdown` is functioning correctly, is as follows:
+- The new untested method (`uncovered_method`) is identified by `smackdown` as newly-introduced but uncovered code.
+- The untested method that already existed on master (`existing_uncovered_method`) is ignored, as it was not introduced by
+  the code changes made in `my_branch`.
+
+The tests in the main `smackdown` repo are geared towards testing for these characteristics.
