@@ -68,7 +68,7 @@ describe "normal usage" do
         # Fake the http call
         coverage_report_path = File.join(@repo_path, "coverage", "coverage.json")
         coverage_json = File.read(coverage_report_path)
-        Net::HTTP.expects(:get).with(url).returns(coverage_json)
+        Net::HTTP.expects(:get).with(URI(url)).returns(coverage_json)
 
         @reporter = Smackdown::CoverageDiffReporter.new(
           @repo_path,
