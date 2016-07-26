@@ -18,7 +18,7 @@ module Smackdown
     end
 
     def covered?
-      @coverage_available && @uncovered_lines.none?
+      coverage_available? && @uncovered_lines.none?
     end
 
     private
