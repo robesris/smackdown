@@ -61,8 +61,8 @@ NOTES:
   string in as `coverage_json: my_json_string`
 
 
-Test Setup
-==========
+Setting up and Running Tests
+============================
 
 Clone the repo, then:
 
