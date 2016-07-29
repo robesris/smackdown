@@ -28,15 +28,27 @@ def check_results
   end
 
   describe "displaying a report" do
-    before do
-      @report_output = ""
-      @reporter.report do |file_coverage_diff|
-        @report_output += "#{file_coverage_diff.relative_path}: #{file_coverage_diff.uncovered_lines.count} uncovered line(s).\n"
+    describe "with default behavior" do
+      before do
+        @report_output = @reporter.report
+      end
+
+      it "should report accurate information about the coverage" do
+        assert_match('puts "This method is added but no test is written to cover it!"', @report_output)
       end
     end
 
-    it "should report accurate information about the coverage" do
-      assert_match(/lib\/class_with_uncovered_code_added\.rb\: 1 uncovered line\(s\)\./, @report_output)
+    describe "with an explicit block provided" do
+      before do
+        @report_output = ""
+        @reporter.report do |file_coverage_diff|
+          @report_output += "#{file_coverage_diff.relative_path}: #{file_coverage_diff.uncovered_lines.count} uncovered line(s).\n"
+        end
+      end
+
+      it "should report accurate information about the coverage" do
+        assert_match(/lib\/class_with_uncovered_code_added\.rb\: 1 uncovered line\(s\)\./, @report_output)
+      end
     end
   end
 end
@@ -113,7 +125,7 @@ describe "error conditions" do
 
     it "raises an error" do
       error = assert_raises(RuntimeError) do
-        reporter = Smackdown::CoverageDiffReporter.new(
+        Smackdown::CoverageDiffReporter.new(
           @repo_path,
           head: "my_branch",
           merge_base: "master",
@@ -123,6 +135,28 @@ describe "error conditions" do
       end
 
       assert_equal "Please pass only :coverage_report_path or :coverage_json, not both.", error.message
+    end
+  end
+end
+
+describe "ULTIMATE DOGFOODING" do
+  describe "running the rake task" do
+    it "indicates that our new and changed code is all covered by tests" do
+      coverage_file_path = File.join(File.dirname(__FILE__), '../coverage/coverage.json')
+      unless File.exist?(coverage_file_path)
+        message = %Q{
+          Skipping the ULTIMATE DOGFOODING test for the smackdown rake task because the test coverage file
+          (coverage/coverage.json) does not exist. This is likely because this is the first time you are running
+          this test suite. After this run, however, the coverage file should have been created, and you should see
+          this test pass if you run the suite a second time.
+
+          This odd situation is due to the rather meta, recursive-ish nature of this test, which is in a way
+          testing the test coverage report itself.
+        }
+        puts message
+        skip("No coverage file available.")
+      end
+      assert_match(/All new and modified code is covered!/, `rake smackdown`)
     end
   end
 end
