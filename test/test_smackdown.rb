@@ -156,7 +156,23 @@ describe "ULTIMATE DOGFOODING" do
         puts message
         skip("No coverage file available.")
       end
-      assert_equal "All new and modified code is covered!", `rake smackdown`
+
+      expected_output = "All new and modified code is covered!"
+      result = `rake smackdown`
+
+      unless result == expected_output
+        message = %Q{
+          The ULTIMATE DOGFOODING test for the smackdown rake task will fail this run. Note that due to the unusual
+          meta/recursive-ish nature of this test, it MAY pass if you run the test a second time.
+
+          This is because the test is looking at the EXISTING test coverage report, which is necessarily the one
+          from the previous test run. So if this is your first time running the test after fixing a failure,
+          you will see it fail one more time, but then pass on subsequent test runs.
+        }
+        puts message
+      end
+
+      assert_equal expected_output, result
     end
   end
 end
