@@ -156,7 +156,7 @@ describe "ULTIMATE DOGFOODING" do
         puts message
         skip("No coverage file available.")
       end
-      assert_match(/All new and modified code is covered!/, `rake smackdown`)
+      assert_equal "All new and modified code is covered!", `rake smackdown`
     end
   end
 end
