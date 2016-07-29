@@ -19,4 +19,4 @@ result = Dir.chdir(repo_path) do
   end
 end
 
-exit(result)
+raise "Init failed. Inspect output above to see what went wrong." unless result
