@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.authors       = ["Rob Esris"]
   s.email         = ["resris@paperlesspost.com"]
   s.description   = "Identify and report on lines of code, introduced in a branch (e.g. a pull request) that are not covered by tests."
+  s.summary       = "Identify and report on lines of code, introduced in a branch (e.g. a pull request) that are not covered by tests."
   s.files         = Dir.glob("{lib}/**/*")
   s.require_path  = "lib"
 
