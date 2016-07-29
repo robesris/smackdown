@@ -1,3 +1,5 @@
+require 'bundler/gem_tasks'
+require 'smackdown'
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
