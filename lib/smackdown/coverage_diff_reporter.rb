@@ -11,6 +11,7 @@ module Smackdown
       vendor/bundle/
       script
       vendor
+      *.rake
     )
 
     attr_reader :file_coverage_diffs
@@ -52,8 +53,10 @@ module Smackdown
     end
 
     def report(&block)
-      @file_coverage_diffs.each do |_relative_path, file_coverage_diff|
-        yield file_coverage_diff
+      if block_given?
+        report_diffs(&block)
+      else
+        default_report
       end
     end
 
@@ -93,6 +96,22 @@ module Smackdown
         coverage = @coverage_json_hash[full_path]
 
         @file_coverage_diffs[relative_path] = FileCoverageDiff.new(relative_path, full_path, coverage, patch)
+      end
+    end
+
+    def report_diffs(&block)
+      @file_coverage_diffs.each do |_relative_path, file_coverage_diff|
+        yield file_coverage_diff
+      end
+    end
+
+    def default_report
+      if completely_covered?
+        "All new and modified code is covered!"
+      else
+        @file_coverage_diffs.inject("") do |output, (_path, file_coverage_diff)|
+          "#{output}#{file_coverage_diff.to_s}"
+        end
       end
     end
   end

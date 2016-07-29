@@ -21,6 +21,26 @@ module Smackdown
       coverage_available? && @uncovered_lines.none?
     end
 
+    def to_s
+      str = relative_path
+
+      if coverage_available?
+        if covered?
+          str += "\n100\% covered!"
+        else
+          uncovered_lines.each do |line|
+            str += "\n#{line.line_num}: #{line.line_content}"
+          end
+        end
+      else
+        str += "\nNo coverage for this file!"
+      end
+
+      str += "\n\n-----------------------------------------\n"
+
+      str
+    end
+
     private
 
     def record_coverage
