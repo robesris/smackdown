@@ -137,6 +137,7 @@ Clone the repo, then:
 
 ```
 cd smackdown
+bundle install
 git submodule init
 git submodule update --remote
 ruby test/script/init.rb  # This will run the tests in the smackdown_test_repo subproject on the my_branch 
