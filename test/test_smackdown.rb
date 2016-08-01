@@ -138,3 +138,22 @@ describe "error conditions" do
     end
   end
 end
+
+describe "full smackdown coverage" do
+  describe "when all new and modified code is covered by tests" do
+    before do
+      repo_path = File.join(File.dirname(__FILE__), "smackdown_test_repo")
+      @reporter = Smackdown::CoverageDiffReporter.new(
+        repo_path,
+        coverage_report_path: File.join(repo_path, 'coverage', 'full_smackdown_coverage.json'),
+        head: "full_smackdown_coverage",
+        merge_base: "master"
+      )
+      @reporter.run
+    end
+
+    it "reports success" do
+      assert_equal "All new and modified code is covered!", @reporter.report
+    end
+  end
+end
