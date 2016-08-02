@@ -7,12 +7,14 @@ require 'smackdown/coverage_diff_reporter'
 
 module Smackdown
   class Tasks
-    include Rake::DSL if defined? Rake::DSL
+    if defined? Rake::DSL
+      include Rake::DSL
 
-    def install_tasks
-      import File.join(File.dirname(__FILE__), 'tasks/smackdown.rake')
+      def install_tasks
+        import File.join(File.dirname(__FILE__), 'tasks/smackdown.rake')
+      end
     end
   end
 end
 
-Smackdown::Tasks.new.install_tasks
+Smackdown::Tasks.new.install_tasks if defined? Rake::DSL
