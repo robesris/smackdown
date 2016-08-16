@@ -1,3 +1,3 @@
 module Smackdown
-  VERSION = "0.0.1"
+  VERSION = "0.0.1.a"
 end
