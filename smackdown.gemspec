@@ -4,6 +4,7 @@ require 'smackdown/version'
 
 Gem::Specification.new do |s|
   s.name          = "smackdown"
+  s.homepage      = "https://github.com/robesris/smackdown"
   s.version       = Smackdown::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = ["Rob Esris"]
